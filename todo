@@ -1,0 +1,8 @@
+-- Make all errors gracefull so the daemon just dont throw a fit when it
+   happens.
+-- For the future make the daemon mail soneone resposible with that it died
+   and what made it die.
+-- Rewrite Smtp, right now it sucks fat.
+-- Make more customiziable
+-- Check for malicious uses
+-- Rewrite the debug interface to be more uniform

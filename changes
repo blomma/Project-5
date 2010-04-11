@@ -1,0 +1,40 @@
+C h a n g e L o g
+-=-=-=-=-=-=-=-=-
+
+Account 0.3.1, 2000.04.14
+----------------------
+
+* Moved COPYING to LICENSE
+* Updated the README file
+* Added a new build system, thanks to TarCust
+* Some more work on the documentation
+* The license can now be found in LICENSE instead of COPYING
+* Cleaned up the code
+* Added an option to Debug.pm to not include strace output
+
+
+Account 0.3, 2000.04.09
+-----------------------
+
+* Moved to use perl 5.6.0
+* Rewrote Smtp.pm to better handle errors
+* Added to the doc
+
+
+Account 0.2, 2000.04.09
+-----------------------
+
+* Better handling of errors.
+* Rewrote the modules for better code reuse.
+* Added a option till add a kill argument to the daemon
+  to kill it.
+* Wrote documentation.
+* Went over to HTML::Template instead of my own.
+* Added support for both Postgresql and Mysql.
+* bugfixes.
+
+
+Account 0.1, 2000.04.05
+-----------------------
+
+* Initial release.

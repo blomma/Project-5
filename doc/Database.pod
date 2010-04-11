@@ -1,0 +1,41 @@
+=head1 Name
+
+DATABASE - Project5::Account Database
+
+=head1 Description
+
+This is description of how the database structure looks like
+
+=head1 Database - account
+
+=head2 Table - useraccount
+
+=begin text
+
+  id: 
+     This is a autoincrementing field
+  username: 
+     This is the username that should be created
+  password:
+     This is the password to set for the created account
+  email:
+     This is the emailaddress to send to when the account it created
+  realname:
+     This is the real name of the person whom the account is created for
+  address:
+     This is the address of the person the account is created for
+  status:
+    This is the status of the account
+         1 => active
+         2 => pending
+         3 => inactive
+  action:
+    This defines what action should be taken on the account       
+         1  => create new account
+         2  => create new account, and mail them when it is set up
+         3  => create new account, create a random password and mail it
+         4  => create a new password for account and mail it
+         5  => suspend account
+         6  => remove account
+
+=end text

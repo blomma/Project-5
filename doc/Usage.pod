@@ -1,0 +1,11 @@
+=head1 Name
+
+USAGE - Project5::Account
+
+Basically you start the daemon from the shell by a simple
+./daemon.pl. To kill it just ./daemon.pl kill and to
+restart it ./daemon.pl restart
+
+=head1 Last modified
+
+$Id: Usage.pod,v 1.1 2000/04/11 05:42:59 child Exp $

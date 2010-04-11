@@ -1,0 +1,73 @@
+=head1 Name
+
+README - Project5::Account, version 0.3.1 (14-Apr-2000)
+
+=head1 Description
+
+This is the README file for Project5::Account. Please read all
+docementation carefully. The INSTALL file contains instructions
+on how to setup the system
+
+=head2 What is Project5::Account
+
+Project5::Account is a database-driven account creation tool using
+either Postgresql or Mysql as it database backend.
+Basically in standalone mode it can be used as a way for a systemAdmin
+to create accounts from a webbrowser.
+A more powerfull angle is to use it in conjunction with a more public
+system where one might want to automate the proccess of account creation.
+
+At the moment it requires a bit of manhandling to install, and it's beta
+quality code so take caution, other than that i've tried it and it works for
+me (tm).
+
+=head2 Hardware/Software
+
+Project5::Account should have a minimal impact on the system it is run on,
+i can't forsee it needing any special hardware, as long as it is capable of
+running the database backend.
+
+This program is a free software released under the GNU GPL License;
+see the LICENSE file for details on license terms.
+
+=head2 Documentation
+
+Please read the various documents that come with Project5::Account code (in
+F<doc/>).
+
+=over 4
+
+=item README
+
+this document
+
+=item Usage.txt
+
+how to use it
+
+=item Install.txt
+
+how to install
+
+=item Database.txt
+
+a description of the database scheme
+
+=back
+
+=head2 Installation
+
+See F<Install.txt>
+
+=head1 Author
+
+Mikael hultgren <micke@four04.com>.
+
+=head1 Acks
+
+Thanks to Smtp::Sendmail for insight into how smtp works,
+and Slash for the hints on how to write docs
+
+=head1 Last modified
+
+$Id: README.pod,v 1.7 2000/04/14 01:34:58 child Exp $

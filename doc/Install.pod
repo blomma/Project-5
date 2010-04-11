@@ -1,0 +1,212 @@
+=head1 Name
+
+INSTALL - Project5::Account Installation
+
+=head1 Software requirements
+
+Whatever version listed are the versions recommended. You may try a
+newer version, and it should work, but it is not quaranteed.
+Don't try and use anything older than these listed versions, unless
+stated otherwise.
+
+It's assumed that you have some working experience with some form
+of Unix, Apache, SQL database, and of course perl ;)
+
+=head2 Databse, webserver, etc
+
+=over 4
+
+=item MySQL
+      
+      version: 3.22.32
+      http://www.mysql.com/
+
+=item Postgresql
+
+      version: 6.5.3
+      http://www.postgresql.com/
+
+=item perl
+
+      version: 5.005_03 (non_threaded)
+      version: 5.6 (not tested, should work fine)
+      http://www.perl.com/
+
+=item Apache
+
+      version: 1.3.12 ( the whole 1.3 series should work fine )
+      http://www.apache.org
+
+=back
+
+=head2 Perl modules
+
+=over 4
+
+=item DBI
+
+      version 1.13
+      http://www.symbolstone.org/technology/perl/DBI/index.html
+
+=item Msql-Mysql-modules 
+
+      version 1.2211
+      http://www.symbolstone.org/technology/perl/DBI/index.html
+
+=item DBD::Pg
+
+      version 0.93
+      http://www.symbolstone.org/technology/perl/DBI/index.html
+
+=item CGI
+
+      version 2.62
+      http://stein.cshl.org/WWW/software/CGI/cgi_docs.html
+
+=item HTML::Template
+
+      version 1.7
+      http://sourceforge.net/project/?group_id=1075
+
+=item MIME-Base62
+
+      version 2.11
+      http://www.cpan.org/modules/by-module/MIME/
+
+=back
+
+=head2 Operating system
+
+=over 4
+
+=item Linux
+
+      For now Project5::Account only runs on a linux platform, this is beacuse of
+      the way it creates accounts.
+      Support for other platforms will prolly come in future incarnations.
+
+=back
+
+=head2 Project5::Account Code
+
+       daemon.pl
+       cgi/account.cgi
+       lib/Account.pm
+       lib/Daemon.pm
+       lib/Debug.pm
+       lib/Error.pm
+       lib/Os.pm
+       lib/Password.pm
+       lib/Proc.pm
+       lib/Smtp.pm
+       lib/Base/Base.pm
+       lib/BaseConf.pm
+
+
+=head1 Installation
+
+The following installation guide assumes you have some Unix knowledge and have a 
+properly installed and configured webserver to handle CGI scripting with Perl.
+
+For information about obtaining and installing the required Perl modules, see 
+the Perl documentation. Using the CPAN shell is probably the easiest way to 
+install the modules, but not always the best way, for the best behavior do it 
+youreself(tm). For information about installing and 
+configuring MySQL or Postgresql, see its documentation.
+
+The commands in the following steps are just examples that are typical for a 
+Linux/Apache installation by the root user. The actual commands you have to 
+issue will depend on your respective platform and user status.
+
+=head2 Daemon
+
+1. The daemon.pl program can be placed anywhere you want, but prefferable not 
+inside the web directory of the server. Once it is started it will chroot to / and then
+go into the background.
+
+2. It has to be suid root to be able to add users.
+
+3. Also right now it writes a debug log to '/var/log/debug.log', my advice at the moment is to
+have the debug on, incase something happens. To change the directory it writes it's log ot you 
+have to edit Debug.pm and change the location there. This will be fixed in
+future incarnations.
+
+4. Also you should edit 'daemon.pl' and change the line at the top where it defines
+which email address the mail it sends is from. Also you should set which smtp_server
+it should use to send the mail.
+In the future i'll add support for sending the mail through a MDA.
+
+At the top of daemon.pl is a line that reads.
+'unshift (@INC, "lib");'
+This has to be changed to where you install the rest of the script ( see below ).
+So for example if you install the rest of the script in '/home/www/htdocs/account',
+you have to change the above line to '/home/www/htdocs/account/lib' or else it found find
+it's support modules. VERY IMPORTANT,
+
+5. At startup the daemon writes a file called /var/run/account.pid, that
+holds the pid of the process, this is nescesary to be able to kill it later.
+
+=head2 Cgi
+
+1. The important thing to remember when installing the account.cgi script is relativity,
+that is, you can name the directory it lives to whatever you want, but you have to keep 
+the realtive paths in the directory structure, that is you have to keep the 'lib' dir in 
+a dir under the rest of the script.
+
+2. Don't forget to do a chmod 755 to *.cgi *.pl to be usable.
+
+3. Put a fork in me and that should be it.
+
+=head2 Databse MySQL
+
+The following steps assume you have installed your own MySQL server and have 
+root access.
+
+1. To create the database, issue the following command using the mysqladmin 
+utility (you will need the MySQL root password, which you should have set during 
+or after the MySQL installation):
+
+  mysqladmin -p create account
+
+2. To set the account database access rights, edit the file "grant-access.sql"
+in the extracted sql directory and replace "username", "localhost" and 
+"password" with the correct values. Then issue the following 
+command using the mysql client:
+
+  mysql -p < grant-access.sql
+
+3. To create the tables, issue the following command. If your database name is 
+not "account", you have to edit the first line of file create-tables.sql 
+accordingly.
+
+  mysql -uusername -p < create-tables-mysql.sql
+
+Security note: if you have to share your server with untrusted people, don't put 
+the database password on the command line or in a world-readable file. Either 
+type it in interactively like in the above examples, or put it in ~/.my.cnf (see 
+MySQL docs). Since BaseConf.pm contains the password, it should be only 
+readable by you and the webserver. Unfortunately, this might be impossible or 
+difficult, depending on the OS and webserver setup.
+
+=head2 Database - Posgresql
+
+The following steps assume you have a installed you own Postgresql server and have
+root access.
+
+1. First create a database user with the following command, you should do this with
+the postgresql user.
+If youre database name isnt 'account' then change it in the syntax.
+Answer no to the first two questions, but create a database for the user.
+
+  createuser account
+
+2. Now create the table for the database by issuing the following command, if 
+youre database name isnt 'accountä then change it to whatever you named it.
+
+  psql -d account -u -f create-tables-mysql.sql
+
+If everything worked as it should youre done.
+
+=head1 Last modified
+
+$Id: Install.pod,v 1.1 2000/04/11 05:42:59 child Exp $
